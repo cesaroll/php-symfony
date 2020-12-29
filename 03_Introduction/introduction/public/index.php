@@ -3,35 +3,19 @@
 require dirname(__DIR__).'/vendor/autoload.php';
 
 use App\Format\BaseFormatInterface;
-use App\Format\{JSON,XML,YAML};
+use App\Format\{FormatFactory, JSON,XML,YAML};
 
-
-function convertData(BaseFormatInterface $format): string {
-    return (string)$format;
-}
-
-function getName(BaseFormatInterface $format): string {
-    return $format->getName();
-}
-
-
-
-$myInfo = [
+$data = [
     "Name" => "Cesar",
     "LastName" => "Lopez"
 ];
 
-$json = new JSON($myInfo);
-$xml = new XML($myInfo);
-$yml = new YAML($myInfo);
+$factory = new FormatFactory();
+$format = $factory->getFormatter('JSON', $data);
 
 print("<html><pre>");
 
-$formats = [$json, $xml, $yml];
-
-foreach($formats as $format) {
-    var_dump(getName($format));
-    var_dump(convertData($format));
-}
+var_dump($format->getName());
+var_dump((string)$format);
 
 print("</pre></html>");
