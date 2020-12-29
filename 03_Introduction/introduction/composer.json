@@ -1,0 +1,14 @@
+{
+    "name": "php-basics/introduction",
+    "require": {
+        "php": ">=7.4",
+        "ext-json": "*"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
