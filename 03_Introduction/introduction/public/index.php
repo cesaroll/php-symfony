@@ -2,8 +2,11 @@
 
 require dirname(__DIR__).'/vendor/autoload.php';
 
+use App\Container;
+use App\Controller\IndexController;
 use App\Format\BaseFormatInterface;
-use App\Format\{FormatFactory, JSON, Serializer, XML,YAML};
+use App\Format\{FormatFactory, JSON, XML,YAML};
+use App\Service\Serializer;
 
 $data = [
     "Name" => "Cesar",
@@ -12,11 +15,32 @@ $data = [
 
 print("<html><pre>");
 
-$serializer = new Serializer(new JSON());
-var_dump($serializer->serialize($data));
+$container = new Container();
+$container->addService('format.json', function() {
+    return new JSON();    
+});
 
-$serializer = new Serializer(new XML());
-var_dump($serializer->serialize($data));
+$container->addService('format.xml', function() {
+    return new XML();    
+});
 
+$container->addService('format', function() use ($container) {
+    return $container->getService('format.json');
+});
+
+$container->addService('serializer', function() use ($container) {
+    return new Serializer($container->getService('format'));
+});
+
+$container->addService('controller.index', function() use ($container) {
+    return new IndexController($container->getService('serializer'));
+});
+
+
+//var_dump($container);
+
+$controller = $container->getService('controller.index');
+var_dump($container->getServices());
+var_dump($controller->index());
 
 print("</pre></html>");

@@ -5,7 +5,9 @@
  */
 declare(strict_types=1);
 
-namespace App\Format;
+namespace App\Service;
+
+use App\Format\BaseFormatInterface;
 
 class Serializer {
 
