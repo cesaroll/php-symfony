@@ -9,18 +9,40 @@ declare(strict_types=1);
 namespace App\Format;
 
 class FormatFactory {
-    public function getFormatter(string $formatterType, array $data): ?BaseFormatInterface {
-        switch($formatterType) {
-            case 'JSON':
-                return new JSON($data);
-            case 'XML':
-                return new XML($data);
-            case 'YAML':
-            case 'YML':
-                return new YAML($data);
+
+    private array $formatters = [];
+
+    public function __construct()
+    {
+        $this->formatters = [
+            new JSON(),
+            new XML(),
+            new YAML()
+        ];
+    }
+
+    public function getFormatter(string $name, array $data): ?BaseFormatInterface {
+
+        $formatter = $this->getFormatterFromArray($name);
+
+        if ($formatter) {
+            $formatter->setData($data);
         }
-        return null;
+
+        return $formatter;
     }    
+
+    private function getFormatterFromArray(string $name): ?BaseFormat {
+        $filteredFormatters = array_filter($this->formatters, function ($formatter) use ($name) {
+            return $formatter->getName() === $name;    
+        });
+
+        if(count($filteredFormatters)) {
+            return reset($filteredFormatters);
+        }
+
+        return null;
+    }
 }
 
 ?>
