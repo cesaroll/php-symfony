@@ -16,7 +16,7 @@ class XML extends BaseFormat {
             $result .= '<'.$key.'>'.$value.'</'.$key.'>';
         }
 
-        return $result;
+        return htmlspecialchars($result);
     }
 
     public function convertFromString(string $string): array {

@@ -11,15 +11,6 @@ abstract class BaseFormat implements BaseFormatInterface {
 
     protected array $data;
 
-    /**
-     * BaseFormat constructor.
-     *
-     * @param array $data
-     */
-    public function __construct(array $data=[]) {
-        $this->data = $data;
-    }
-
     public function __toString(): string {
         return htmlspecialchars($this->convert());
     }
