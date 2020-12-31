@@ -28,22 +28,17 @@ $container->addService('format', function() use ($container) {
     return $container->getService('format.json');
 }, BaseFormatInterface::class);
 
-$container->addService('serializer', function() use ($container) {
-    return new Serializer($container->getService('format'));
-});
-
-$container->addService('controller.index', function() use ($container) {
-    return new IndexController($container->getService('serializer'));
-});
-
 $container->loadServices('App\\Service');
 $container->loadServices('App\\Controller');
 
 
 //var_dump($container);
 
-$controller = $container->getService('controller.index');
+$controller = $container->getService('App\\Controller\\IndexController');
 var_dump($container->getServices());
+
 var_dump($controller->index());
+
+var_dump($container->getService('App\Controller\PostController')->index());
 
 print("</pre></html>");
