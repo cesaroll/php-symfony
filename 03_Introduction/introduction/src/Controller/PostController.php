@@ -1,14 +1,14 @@
 <?php
- /**
- * @author    Cesar Lopez Lerma <clopezlerma@wayfair.com>
- * @copyright 2020 Wayfair LLC - All rights reserved
- */
+
 declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Service\Serializer;
 
+/**
+ * @Route(route="/posts")
+ */
 class PostController {
 
     private Serializer $serializer;
@@ -18,10 +18,25 @@ class PostController {
         $this->serializer = $serializer;
     }          
 
+    /**
+     * @Route(route="/")
+     */
     public function index(): string {
         return $this->serializer->serialize(
             [
                 'Action' => 'Post',
+                'Time' => time()
+            ]
+        );
+    }
+
+    /**
+    * @Route(route="/one")
+    */ 
+    public function one(): string {
+        return $this->serializer->serialize(
+            [
+                'Action' => 'PostOne',
                 'Time' => time()
             ]
         );

@@ -2,9 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd888db1-1735-4b1b-bfc1-3fdf4376d8f5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/introduction.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/introduction.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Container.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Container.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/IndexController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/IndexController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PostController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Format/BaseFormat.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Format/BaseFormat.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Format/BaseFormatInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Format/BaseFormatInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Format/FormatFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Format/FormatFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Format/JSON.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Format/JSON.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Format/NamedFormatInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Format/NamedFormatInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Format/XML.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Format/XML.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Format/YAML.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Format/YAML.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Serializer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Serializer.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +38,8 @@
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/annotations" />
     </include_path>
   </component>
   <component name="ProjectId" id="1mKYHKxY0GbdnROSzWOYFrSyNRK" />
@@ -52,7 +67,7 @@
       <updated>1609243660924</updated>
       <workItem from="1609243662175" duration="9395000" />
       <workItem from="1609351584400" duration="172000" />
-      <workItem from="1609351892936" duration="758000" />
+      <workItem from="1609351892936" duration="893000" />
     </task>
     <servers />
   </component>

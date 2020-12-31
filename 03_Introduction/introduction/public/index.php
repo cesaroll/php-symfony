@@ -3,10 +3,9 @@
 require dirname(__DIR__).'/vendor/autoload.php';
 
 use App\Container;
-use App\Controller\IndexController;
-use App\Format\BaseFormatInterface;
-use App\Format\{FormatFactory, JSON, XML,YAML};
-use App\Service\Serializer;
+use App\Format\JSON;
+use App\Format\XML;
+use App\Kernel;
 
 $data = [
     "Name" => "Cesar",
@@ -15,24 +14,10 @@ $data = [
 
 print("<html><pre>");
 
-$container = new Container();
-$container->addService('format.json', function() {
-    return new JSON();    
-});
+$kernel = new Kernel();
+$kernel->boot();
 
-$container->addService('format.xml', function() {
-    return new XML();    
-});
-
-$container->addService('format', function() use ($container) {
-    return $container->getService('format.json');
-}, BaseFormatInterface::class);
-
-$container->loadServices('App\\Service');
-$container->loadServices('App\\Controller');
-
-
-//var_dump($container);
+$container = $kernel->getContainer();
 
 $controller = $container->getService('App\\Controller\\IndexController');
 var_dump($container->getServices());

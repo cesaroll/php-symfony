@@ -1,14 +1,14 @@
 <?php
- /**
- * @author    Cesar Lopez Lerma <clopezlerma@wayfair.com>
- * @copyright 2020 Wayfair LLC - All rights reserved
- */
+
 declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Service\Serializer;
 
+/**
+* @Route(route="/")
+*/ 
 class IndexController {
 
     private Serializer $serializer;
@@ -18,6 +18,9 @@ class IndexController {
         $this->serializer = $serializer;
     }          
 
+    /**
+    * @Route(route="/")
+     */
     public function index(): string {
         return $this->serializer->serialize(
             [
