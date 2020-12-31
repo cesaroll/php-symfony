@@ -11,12 +11,18 @@ use Closure;
 
 class Container {
     private array $services = [];
+    private array $aliases = [];
 
     public function addService(
         string $name,
-        Closure $closure
+        Closure $closure,
+        ?string $alias = null
     ): void {
         $this->services[$name] = $closure; 
+
+        if ($alias) {
+            $this->addAlias($alias, $name);
+        }
     }
 
     public function hasService(string $name): bool {
@@ -35,10 +41,34 @@ class Container {
         return $this->services[$name];
     }
 
+    public function addAlias(string $alias, string $service): void {
+       $this->aliases[$alias] = $service; 
+    }
+
+    public function hasAlias(string $alias): bool {
+        return isset($this->aliases[$alias]);
+    }
+
+    public function getAlias(string $name) {
+        return $this->getService($this->aliases[$name]);
+    }
+
     public function getServices(): array {
         return [
-            'services' => array_keys($this->services)  
+            'services' => array_keys($this->services),
+            'aliases' => $this->aliases
         ];
+    }
+
+    public function loadServices(string $namespace): void {
+        $baseDir = __DIR__ . '/';
+        $actualDirectory = str_replace('\\', '/', $namespace);
+        $actualDirectory = $baseDir . mb_substr($actualDirectory, mb_strpos($actualDirectory, '/') + 1);
+        
+        $files = array_filter(scandir($actualDirectory), function($file) {
+            return $file !== '.' && $file !== '..'; 
+        });
+        var_dump($files);
     }
 }
 

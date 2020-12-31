@@ -26,7 +26,7 @@ $container->addService('format.xml', function() {
 
 $container->addService('format', function() use ($container) {
     return $container->getService('format.json');
-});
+}, BaseFormatInterface::class);
 
 $container->addService('serializer', function() use ($container) {
     return new Serializer($container->getService('format'));
@@ -35,6 +35,9 @@ $container->addService('serializer', function() use ($container) {
 $container->addService('controller.index', function() use ($container) {
     return new IndexController($container->getService('serializer'));
 });
+
+$container->loadServices('App\\Service');
+$container->loadServices('App\\Controller');
 
 
 //var_dump($container);
