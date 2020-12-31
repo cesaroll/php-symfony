@@ -12,18 +12,7 @@ $data = [
     "LastName" => "Lopez"
 ];
 
-print("<html><pre>");
-
 $kernel = new Kernel();
 $kernel->boot();
+$kernel->handleRequests();
 
-$container = $kernel->getContainer();
-
-$controller = $container->getService('App\\Controller\\IndexController');
-var_dump($container->getServices());
-
-var_dump($controller->index());
-
-var_dump($container->getService('App\Controller\PostController')->index());
-
-print("</pre></html>");

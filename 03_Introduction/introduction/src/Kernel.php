@@ -7,10 +7,14 @@ namespace App;
 use App\Format\BaseFormatInterface;
 use App\Format\JSON;
 use App\Format\XML;
+use App\Annotations\Route;
+use Doctrine\Common\Annotations\AnnotationReader;
+use ReflectionClass;
 
 class Kernel {
 
     private Container $container;
+    private $routes = [];
 
     public function __construct()
     {
@@ -40,7 +44,51 @@ class Kernel {
         }, BaseFormatInterface::class);
 
         $container->loadServices('App\\Service');
-        $container->loadServices('App\\Controller');
+
+        $reader = new AnnotationReader();
+
+        $routes = [];
+
+        $container->loadServices(
+            'App\\Controller',
+            function (string $serviceName, ReflectionClass $class) use ($reader, &$routes) {
+                $route = $reader->getClassAnnotation($class, Route::class);
+
+                if (!$route) {
+                    return;
+                }
+
+                $baseRoute = $route->route;
+
+                foreach ($class->getMethods() as $method) {
+                    $route = $reader->getMethodAnnotation($method, Route::class);
+
+                    if (!$route) {
+                        continue;
+                    }
+
+                    $routes[str_replace('//', '/', $baseRoute . $route->route)] = [
+                        'service' => $serviceName,
+                        'method' => $method->getName()  
+                    ];
+                } 
+                
+            }
+        );
+
+        $this->routes = $routes;
+    }
+
+    public function handleRequests() {
+        $uri = $_SERVER['REQUEST_URI'];
+
+        if (isset($this->routes[$uri])) {
+            $route = $this->routes[$uri];
+            $response = $this->container->getService($route['service'])
+                                        ->{$route['method']}();
+            echo $response;
+            die;
+        }
     }
 }
 
