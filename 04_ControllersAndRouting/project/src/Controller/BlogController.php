@@ -43,7 +43,7 @@ class BlogController extends AbstractController {
         return new JsonResponse($this->searchByIdAndColumn($id, 'id'));
     }
 
-    /*
+    /**
      * @Route("/{slug}", name="blog_by_slug")
      */
     public function postBySlug($slug) {
