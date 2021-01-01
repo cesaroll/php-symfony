@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -34,12 +35,15 @@ class BlogController extends AbstractController {
      *
      * @param int $page
      *
-     * @return JsonResponse
+     * @return Response
      */
-    public function list(int $page = 1): JsonResponse {
-        return new JsonResponse(
+    public function list(int $page = 1, Request $request): Response {
+        $limit= $request->get('limit', 10);
+
+        return $this->json(
             [
                 'page' => $page,
+                'limit' => $limit,
                 'data' => array_map(function ($item) {
                     return $this->generateUrl('blog_by_id', ['id' => $item['id']]);
                 }, self::POSTS)
@@ -51,14 +55,14 @@ class BlogController extends AbstractController {
      * @Route("/post/{id}", name="blog_by_id", requirements={"id"="\d+"})
      * @param int $id
      *
-     * @return JsonResponse
+     * @return Response
      */
-    public function post(int $id): JsonResponse {
+    public function post(int $id): Response {
         $idx = array_search($id, array_column(self::POSTS, 'id'), true);
         if ($idx !== false) {
-            return new JsonResponse(self::POSTS[$idx]);
+            return $this->json(self::POSTS[$idx]);
         }
-        return new JsonResponse(self::POSTS[$idx]);
+        return $this->json(self::POSTS[$idx]);
     }
 
     /**
@@ -66,53 +70,15 @@ class BlogController extends AbstractController {
      *
      * @param string $slug
      *
-     * @return JsonResponse
+     * @return Response
      */
-    public function postBySlug(string $slug): JsonResponse {
+    public function postBySlug(string $slug): Response {
         $idx = array_search($slug, array_column(self::POSTS, 'slug'), true);
         if ($idx !== false) {
-            return new JsonResponse(self::POSTS[$idx]);
+            return $this->json(self::POSTS[$idx]);
         }
-        return new JsonResponse(self::POSTS[$idx]);
+        return $this->json(self::POSTS[$idx]);
     }
-
-
-//    /**
-//     * @Route("/{page}", name="blog_list", defaults={"page": 5})
-//     * @param int $page
-//     *
-//     * @return JsonResponse
-//     */
-//    public function list(int $page = 1): JsonResponse {
-//        return new JsonResponse(
-//            [
-//                'page' => $page,
-//                'data' => array_map(function ($item) {
-//                    return $this->generateUrl('blog_by_id', ['id' => $item['id']]);
-//                }, self::POSTS)
-//            ]
-//        );
-//    }
-//
-//    /**
-//     * @Route("/post/{id}", name="blog_by_id", requirements={"id"="\d+"})
-//     * @param int $id
-//     *
-//     * @return JsonResponse
-//     */
-//    public function post(int $id): JsonResponse {
-//        return new JsonResponse($this->searchByIdAndColumn($id, 'id'));
-//    }
-//
-//    /**
-//     * @Route("/post/{slug}", name="blog_by_slug")
-//     * @param $slug
-//     *
-//     * @return JsonResponse
-//     */
-//    public function postBySlug($slug): JsonResponse {
-//        return new JsonResponse($this->searchByIdAndColumn($slug, 'slug'));
-//    }
 }
 
 ?>
