@@ -12,31 +12,14 @@ use App\Model\BlogPostModel;
 use AutoMapperPlus\AutoMapper;
 use AutoMapperPlus\Configuration\AutoMapperConfig;
 
-class BlogPostMapper {
+class BlogPostMapper extends BaseMapper {
 
-    private AutoMapper $autoMapper;
-
-    /**
-     * BlogPostMapper constructor.
-     *
-     */
-    public function __construct() {
-        $this->setUp();
-    }
-
-    private function setUp(): void {
+    protected function setUp(): void {
         $config = new AutoMapperConfig();
         $config->registerMapping(BlogPostModel::class, BlogPost::class)
             ->reverseMap();
 
         $this->autoMapper = new AutoMapper($config);
-    }
-
-    /**
-     * @return AutoMapper
-     */
-    public function getAutoMapper(): AutoMapper {
-        return $this->autoMapper;
     }
 
 }

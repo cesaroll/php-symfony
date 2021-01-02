@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="95433bf9-53fa-434e-870f-0bc55387105c" name="Default Changelist" comment="" />
+    <list default="true" id="95433bf9-53fa-434e-870f-0bc55387105c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../05_Db_Doctrine/project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../05_Db_Doctrine/project/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../05_Db_Doctrine/project/src/Controller/BlogController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../05_Db_Doctrine/project/src/Controller/BlogController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../05_Db_Doctrine/project/src/Mapper/BlogPostMapper.php" beforeDir="false" afterPath="$PROJECT_DIR$/../../05_Db_Doctrine/project/src/Mapper/BlogPostMapper.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -89,6 +93,7 @@
       <workItem from="1609524852465" duration="157000" />
       <workItem from="1609525020541" duration="4497000" />
       <workItem from="1609575724048" duration="395000" />
+      <workItem from="1609626459187" duration="23000" />
     </task>
     <servers />
   </component>

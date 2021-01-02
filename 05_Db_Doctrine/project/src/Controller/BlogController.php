@@ -6,7 +6,6 @@ use App\Entity\BlogPost;
 use App\Mapper\BlogPostMapper;
 use App\Model\BlogPostModel;
 use AutoMapperPlus\AutoMapper;
-use AutoMapperPlus\Configuration\AutoMapperConfig;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,7 +44,10 @@ class BlogController extends AbstractController {
      * @param SerializerInterface $serializer
      * @param BlogPostMapper      $mapper
      */
-    public function __construct(SerializerInterface $serializer, BlogPostMapper $mapper) {
+    public function __construct(
+        SerializerInterface $serializer,
+        BlogPostMapper $mapper
+    ) {
         $this->serializer = $serializer;
         $this->mapper = $mapper->getAutoMapper();
     }
@@ -104,15 +106,16 @@ class BlogController extends AbstractController {
 
     /**
      * @Route("/add", name="blog_add", methods={"POST"})
-     * @param Request $request
+     * @param Request        $request
+     * @param BlogPostMapper $mapper
      *
      * @return Response
      */
-    public function add(Request $request): Response {
+    public function add(Request $request, BlogPostMapper $mapper): Response {
 
         $blogPostModel = $this->serializer->deserialize($request->getContent(), BlogPostModel::class, 'json');
-
-        $blogPost = $this->mapper->map($blogPostModel, BlogPost::class);
+        
+        $blogPost = $mapper->getAutoMapper()->map($blogPostModel, BlogPost::class);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($blogPost);
