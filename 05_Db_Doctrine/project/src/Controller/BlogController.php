@@ -3,18 +3,23 @@
 namespace App\Controller;
 
 use App\Entity\BlogPost;
+use App\Mapper\BlogPostMapper;
 use App\Model\BlogPostModel;
+use AutoMapperPlus\AutoMapper;
+use AutoMapperPlus\Configuration\AutoMapperConfig;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/blog")
  */
 class BlogController extends AbstractController {
+
+    private SerializerInterface $serializer;
+    private AutoMapper $mapper;
 
     private const POSTS = [
         [
@@ -33,6 +38,18 @@ class BlogController extends AbstractController {
             'title' => 'This is the last example'
         ],
     ];
+
+    /**
+     * BlogController constructor.
+     *
+     * @param SerializerInterface $serializer
+     * @param BlogPostMapper      $mapper
+     */
+    public function __construct(SerializerInterface $serializer, BlogPostMapper $mapper) {
+        $this->serializer = $serializer;
+        $this->mapper = $mapper->getAutoMapper();
+    }
+
 
     /**
      * @Route("/{page}", name="blog_list", defaults={"page": 5}, requirements={"page"="\d+"}, methods={"GET"})
@@ -92,30 +109,16 @@ class BlogController extends AbstractController {
      * @return Response
      */
     public function add(Request $request): Response {
-        /** @var Serializer $serializer */
-        $serializer = $this->get('serializer');
 
-        $blogPostModel = $serializer->deserialize($request->getContent(), BlogPostModel::class, 'json');
+        $blogPostModel = $this->serializer->deserialize($request->getContent(), BlogPostModel::class, 'json');
 
-        
+        $blogPost = $this->mapper->map($blogPostModel, BlogPost::class);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($blogPost);
+        $em->flush();
 
         return $this->json($blogPost);
-//
-//        $blogPost = new BlogPost();
-//        $blogPost->setTitle('AAAA new blog post!');
-//        $blogPost->setPublished($this->getDateTimeNow());
-//        $blogPost->setContent('Hola');
-//        $blogPost->setAuthor('Romel');
-//        $blogPost->setSlug('a-new-romel-post');
-//
-//        $serialized = $serializer->serialize($blogPost, 'json');
-//        return $this->json($serialized);
-
-//        $em = $this->getDoctrine()->getManager();
-//        $em->persist($blogPost);
-//        $em->flush();
-
-//        return $this->json($blogPost);
     }
 
     private function getDateTimeNow(): \DateTimeInterface {
