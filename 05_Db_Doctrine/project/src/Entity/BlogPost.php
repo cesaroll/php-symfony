@@ -37,6 +37,11 @@ class BlogPost
      */
     private $author;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $slug;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,4 +94,14 @@ class BlogPost
 
         return $this;
     }
+
+    public function getSlug(): ?string {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): void {
+        $this->slug = $slug;
+    }
+
+
 }

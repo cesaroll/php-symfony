@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="95433bf9-53fa-434e-870f-0bc55387105c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20210102085734.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20210102085734.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/BlogPost.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/BlogPost.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +114,7 @@
       <workItem from="1609524852465" duration="157000" />
       <workItem from="1609525020541" duration="4497000" />
       <workItem from="1609575724048" duration="395000" />
-      <workItem from="1609576655691" duration="1556000" />
+      <workItem from="1609576655691" duration="2459000" />
     </task>
     <servers />
   </component>
