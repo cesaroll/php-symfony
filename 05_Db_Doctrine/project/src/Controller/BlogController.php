@@ -114,8 +114,9 @@ class BlogController extends AbstractController {
     public function add(Request $request, BlogPostMapper $mapper): Response {
 
         $blogPostModel = $this->serializer->deserialize($request->getContent(), BlogPostModel::class, 'json');
-        
-        $blogPost = $mapper->getAutoMapper()->map($blogPostModel, BlogPost::class);
+
+        $blogPost = $mapper->toBlogPost($blogPostModel);
+        $blogPost->setPublished($this->getDateTimeNow());
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($blogPost);

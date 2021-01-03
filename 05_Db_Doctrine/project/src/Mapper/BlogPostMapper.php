@@ -22,4 +22,12 @@ class BlogPostMapper extends BaseMapper {
         $this->autoMapper = new AutoMapper($config);
     }
 
+    public function toBlogPost(BlogPostModel $model): BlogPost {
+        return $this->getAutoMapper()->map($model, BlogPost::class);
+    }
+
+    public function toBlogPostModel(BlogPost $entity): BlogPostModel {
+        return $this->getAutoMapper()->map($entity, BlogPostModel::class);
+    }
+
 }
