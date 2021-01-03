@@ -12,8 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use DateTimeInterface;
-use DateTimeImmutable;
+use DateTime;
 
 /**
  * @Route("/blog")
@@ -104,7 +103,7 @@ class BlogController extends AbstractController {
         $blogPostModel = $this->serializer->deserialize($request->getContent(), BlogPostModel::class, 'json');
 
         $blogPost = $mapper->toBlogPost($blogPostModel);
-        $blogPost->setPublished($this->getDateTimeNow());
+        $blogPost->setPublished(new DateTime('now'));
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($blogPost);
@@ -133,10 +132,6 @@ class BlogController extends AbstractController {
 
     private function getEntityManager(): ObjectManager {
         return $this->getDoctrine()->getManager();
-    }
-
-    private function getDateTimeNow(): DateTimeInterface {
-        return new DateTimeImmutable('now');
     }
 }
 
