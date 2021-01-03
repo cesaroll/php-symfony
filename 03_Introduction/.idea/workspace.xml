@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4df861e5-094d-4d64-907e-8954e018b063" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../05_Db_Doctrine/project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../05_Db_Doctrine/project/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../05_Db_Doctrine/project/src/Controller/BlogController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../05_Db_Doctrine/project/src/Controller/BlogController.php" afterDir="false" />
     </list>

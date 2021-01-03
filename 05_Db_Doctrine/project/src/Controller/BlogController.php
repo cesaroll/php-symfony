@@ -6,12 +6,14 @@ use App\Entity\BlogPost;
 use App\Mapper\BlogPostMapper;
 use App\Model\BlogPostModel;
 use App\Repository\BlogPostRepository;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use DateTimeInterface;
+use DateTimeImmutable;
 
 /**
  * @Route("/blog")
@@ -109,6 +111,28 @@ class BlogController extends AbstractController {
         $em->flush();
 
         return $this->json($blogPost);
+    }
+
+    /**
+     * @Route("/{id}", methods={"DELETE"}, name="blog_delete", requirements={"id"="\d+"})
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function delete(int $id): Response {
+        $blogPost = $this->repository->find($id);
+
+        if ($blogPost) {
+            $em = $this->getEntityManager();
+            $em->remove($blogPost);
+            $em->flush();
+        }
+
+        return $this->json(null,Response::HTTP_NO_CONTENT);
+    }
+
+    private function getEntityManager(): ObjectManager {
+        return $this->getDoctrine()->getManager();
     }
 
     private function getDateTimeNow(): DateTimeInterface {
