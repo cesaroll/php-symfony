@@ -5,12 +5,13 @@ namespace App\Controller;
 use App\Entity\BlogPost;
 use App\Mapper\BlogPostMapper;
 use App\Model\BlogPostModel;
-use AutoMapperPlus\AutoMapper;
+use App\Repository\BlogPostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use DateTimeInterface;
 
 /**
  * @Route("/blog")
@@ -18,59 +19,52 @@ use Symfony\Component\Serializer\SerializerInterface;
 class BlogController extends AbstractController {
 
     private SerializerInterface $serializer;
-    private AutoMapper $mapper;
-
-    private const POSTS = [
-        [
-            'id' => 1,
-            'slug' => 'hello-world',
-            'title' => 'Hello World'
-        ],
-        [
-            'id' => 2,
-            'slug' => 'another-post',
-            'title' => 'This is another post'
-        ],
-        [
-            'id' => 3,
-            'slug' => 'last-example',
-            'title' => 'This is the last example'
-        ],
-    ];
+    private BlogPostRepository $repository;
+    private BlogPostMapper $mapper;
 
     /**
      * BlogController constructor.
      *
      * @param SerializerInterface $serializer
+     * @param BlogPostRepository  $repository
      * @param BlogPostMapper      $mapper
      */
     public function __construct(
         SerializerInterface $serializer,
+        BlogPostRepository $repository,
         BlogPostMapper $mapper
     ) {
         $this->serializer = $serializer;
-        $this->mapper = $mapper->getAutoMapper();
+        $this->repository = $repository;
+        $this->mapper = $mapper;
     }
 
 
     /**
      * @Route("/{page}", name="blog_list", defaults={"page": 5}, requirements={"page"="\d+"}, methods={"GET"})
      *
-     * @param int     $page
-     * @param Request $request
+     * @param int                $page
+     * @param Request            $request
+     * @param BlogPostRepository $repository
      *
      * @return Response
      */
-    public function list(int $page = 1, Request $request): Response {
+    public function list(
+        int $page = 1,
+        Request $request,
+        BlogPostRepository $repository
+    ): Response {
         $limit= $request->get('limit', 10);
+
+        $items = $repository->findAll();
 
         return $this->json(
             [
                 'page' => $page,
                 'limit' => $limit,
-                'data' => array_map(function ($item) {
-                    return $this->generateUrl('blog_by_id', ['id' => $item['id']]);
-                }, self::POSTS)
+                'data' => array_map(function (BlogPost $item) {
+                    return $this->generateUrl('blog_by_id', ['id' => $item->getId()]);
+                }, $items)
             ]
         );
     }
@@ -82,11 +76,7 @@ class BlogController extends AbstractController {
      * @return Response
      */
     public function by_id(int $id): Response {
-        $idx = array_search($id, array_column(self::POSTS, 'id'), true);
-        if ($idx !== false) {
-            return $this->json(self::POSTS[$idx]);
-        }
-        return $this->json(self::POSTS[$idx]);
+        return $this->json($this->repository->find($id));
     }
 
     /**
@@ -97,11 +87,7 @@ class BlogController extends AbstractController {
      * @return Response
      */
     public function by_slug(string $slug): Response {
-        $idx = array_search($slug, array_column(self::POSTS, 'slug'), true);
-        if ($idx !== false) {
-            return $this->json(self::POSTS[$idx]);
-        }
-        return $this->json(self::POSTS[$idx]);
+        return $this->json($this->repository->findBy(['slug' => $slug]));
     }
 
     /**
@@ -125,8 +111,8 @@ class BlogController extends AbstractController {
         return $this->json($blogPost);
     }
 
-    private function getDateTimeNow(): \DateTimeInterface {
-        return new \DateTimeImmutable('now');
+    private function getDateTimeNow(): DateTimeInterface {
+        return new DateTimeImmutable('now');
     }
 }
 

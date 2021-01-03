@@ -5,7 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../05_Db_Doctrine/project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../05_Db_Doctrine/project/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../05_Db_Doctrine/project/src/Controller/BlogController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../05_Db_Doctrine/project/src/Controller/BlogController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../05_Db_Doctrine/project/src/Mapper/BlogPostMapper.php" beforeDir="false" afterPath="$PROJECT_DIR$/../05_Db_Doctrine/project/src/Mapper/BlogPostMapper.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
